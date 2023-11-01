@@ -1,5 +1,5 @@
 import React from "react";
-import { render } from "@testing-library/react";
+import { render, fireEvent } from "@testing-library/react";
 import Snowman from "./Snowman";
 
 import img0 from "./0.png";
@@ -10,17 +10,19 @@ it("renders without crashing", function () {
   render(<Snowman />);
 });
 
-
 it("ends game after max amount of guesses", function () {
   const { container, debug } = render(<Snowman
     images={[img0, img1, img2]}
     words={["add"]}
-    maxWrong={3} />);
-  const img = container.querySelector("img");
-  debug(img);// display the img in console
+    maxWrong={1} />);
+  const letterZ = container.querySelector(".z");
+  const letterY = container.querySelector(".y");
 
-  expect(img.getAttribute("alt")).toEqual("AC");
-  expect(img.getAttribute("src")).toContain("AC.png");
+  fireEvent.click(letterZ);
+  fireEvent.click(letterY);
 
-  //guess 6, hide the buttons, show a text you lose
+  expect(container.querySelector('.Button-area')).not.toBeInTheDocument();
+
+  expect(container.querySelector("h2")).toContainHTML("You lose.");
+
 });

@@ -65,6 +65,7 @@ function Snowman({
       <button
         key={ltr}
         value={ltr}
+        className={ltr}
         onClick={handleGuess}
         disabled={guessedLetters.has(ltr)}
       >
@@ -73,12 +74,19 @@ function Snowman({
     ));
   }
 
+  const hidden = (nWrong > maxWrong) ? "hidden" : "";
+
   return (
     <div className="Snowman">
       <img src={(images)[nWrong]} alt={nWrong} />
       <p>{nWrong === 0 ? '' : `Number wrong: ${nWrong}`}</p>
       <p className="Snowman-word">{guessedWord()}</p>
-      <p>{generateButtons()}</p>
+      {hidden === "" &&
+        <p className="Button-area">{generateButtons()}</p>
+      }
+      {/* <p className="Button-area">{generateButtons()}</p> */}
+      <h2>{hidden==="" ? "" : "You lose."}</h2>
+
     </div>
   );
 }
